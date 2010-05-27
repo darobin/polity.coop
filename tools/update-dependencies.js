@@ -25,6 +25,10 @@ if (base.indexOf(name) < 0) {
 base = base.replace(new RegExp(name + ".*$"), "");
 var packs = base + "packages/";
 
+// create packages
+try         { var stat = fs.statSync(packs); }
+catch (e)   { fs.mkdir(packs); }
+
 // command output
 function makeCommandOutput (okmsg) {
     return function (error, stdout, stderr) {
@@ -49,7 +53,7 @@ for (var i = 0, n = depends.length; i < n; i++) {
     }
     catch (e) {
         process.chdir(packs);
-        exec("git clone " + dep, makeCommandOutput("git close " + dep + " OK"));
+        exec("git clone " + dep, makeCommandOutput("git clone " + dep + " OK"));
     }
     process.chdir(cwd);
 }

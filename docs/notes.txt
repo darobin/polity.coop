@@ -1,0 +1,29 @@
+
+URI SPACE
+	- www.polity.coop -> polity.coop
+	
+	- Common space
+		. /users/
+		. /users/{username} (editable if self)
+		. /users/{users}/drafts/
+		. /users/{username}/drafts/{docname} (editable)
+		. /users/{users}/chat/ (XMPP in browser, direct to user)
+		. /blog/{date}/{title}
+	
+	- National space (fr.polity.coop)
+		. /groups/
+		. /groups/{groupname}
+		. /groups/{groupname}/drafts/
+		. /groups/{groupname}/drafts/{docname} (editable)
+		. /groups/{groupname}/chat/ (XMPP in browser, whole group)
+		. /docs/
+		. /docs/{docname}
+		. /archives/
+		. /archives/{listname}
+
+	- all documents have comma tools
+		. ,versions (Atom available)
+		. ,version=n
+		
+	- all chats have logs
+
