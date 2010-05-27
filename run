@@ -2,4 +2,4 @@
 # where downloaded modules are stored
 export NODULES_PATH=./depends
 node ./lib/nodules.js
-# node ./lib/nodules.js --debug
+# node  --debug ./lib/nodules.js
