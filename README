@@ -1,1 +1,5 @@
 This is the repository for the code that runs polity.coop.
+
+Normally all that you ought to need to run this application is Node.js.
+The first time you run it it will be slow as it will download (and cache) the dependencies
+automatically.
