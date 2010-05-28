@@ -27,3 +27,10 @@ URI SPACE
 		
 	- all chats have logs
 
+	- all spaces have an /api/ that is where Pintura is addressed
+
+	- Is it possible to override the default User class by defining it? Or maybe by touching security.js's
+	  exports.userSchema
+
+	- don't use Pintura, use components from it (and more generally, Perstore) because some parts are really
+	  too flaky, and it doesn't do much of what we actually need

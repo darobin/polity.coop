@@ -1,0 +1,5 @@
+
+THOUGHTS:
+	- look into reusing code from node-paperboy for static serving instead of rolling more or less our own
+
+

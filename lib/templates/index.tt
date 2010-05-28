@@ -1,0 +1,4 @@
+[% WRAPPER "polity.tt"
+           title = "Bienvenue!" %]
+   Ceci est l'index.
+[% END %]

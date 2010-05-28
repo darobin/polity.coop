@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+  <head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+    <title>[% title %] [polity.coop]</title>
+    <link rel='stylesheet' href='/css/polity.css' type='text/css' media='all' charset='utf-8'/>
+  </head>
+  <body>
+    <h1>Polity.Coop</h1>
+
+    [% content %]
+  </body>
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' type='text/javascript' charset='utf-8'></script>
+  <script src='http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js'></script>
+  <script src='/js/polity.js'></script>
+</html>
