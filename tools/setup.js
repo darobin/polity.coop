@@ -1,39 +1,36 @@
 #!/usr/bin/env node
 
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-//
-//    THIS SCRIPT IS DEPRECATED -- IT IS MOSTLY HERE FOR HISTORICAL PURPOSES
-//
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
 var sys     = require("sys"),
     fs      = require("fs"),
     exec    = require('child_process').exec;
 
 // --- CONFIG
 var depends = [
-    "git://github.com/kriszyp/commonjs-utils.git",
-    "git://github.com/kriszyp/perstore.git",
-    "git://github.com/kriszyp/pintura.git",
-    "git://github.com/ashb/template.git",
+    "git://github.com/kriskowal/narwhal-lib.git",
+    "git://github.com/kriskowal/narwhal-node.git",
 ];
 var verbose = false; // XXX need a CLI
 // ---/CONFIG
 
 // establish base
 // XXX this might go into a common-tools module, along with setting path
-var name = "tools/update-dependencies.js";
+var name = "tools/setup.js";
 var base = process.argv[1];
 if (base.indexOf(name) < 0) {
     sys.puts("Script not called as " + name + ", unsure how to resolve base directory.");
     process.exit(1);
 }
 base = base.replace(new RegExp(name + ".*$"), "");
-var packs = base + "packages/";
+var packs = base + "commonjs/";
 
+
+sys.puts("packs=" + packs);
 // create packages
 try         { var stat = fs.statSync(packs); }
-catch (e)   { fs.mkdir(packs); }
+catch (e)   { 
+    try { fs.mkdirSync(packs, 0755); }
+    catch (e) { throw new Error("Cannot create " + packs + ": " + e); }
+}
 
 // command output
 function makeCommandOutput (okmsg) {
@@ -63,9 +60,3 @@ for (var i = 0, n = depends.length; i < n; i++) {
     }
     process.chdir(cwd);
 }
-
-
-
-
-
-

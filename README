@@ -1,5 +1,9 @@
 This is the repository for the code that runs polity.coop.
 
+To get this running you will need to execute the following steps:
+
+  1. Get Node.js from http://nodejs.org/
+
 Normally all that you ought to need to run this application is Node.js.
 The first time you run it it will be slow as it will download (and cache) the dependencies
 automatically.
