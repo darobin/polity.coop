@@ -1,14 +1,5 @@
 
-TECH:
-	- switch to using Narwhal as it's far more CommonJS compliant, which we'll need to avoid any number
-	  of bugs. We can still use narwharl-node to run atop Node, but we'll stick to this.
-	- make sure that Nodule is switched over simultaneously, see if it can run something that isn't Node.
-	  Failing that, revive the dependency downloader.
-	- Forget Pintura completely, switch to pure JSGI (over Jack) and reuse the Facets from Perstore where needed.
-	  This might justify starting from scratch: we can move the old stuff around in git and start over.
-
 THOUGHTS:
 	- look into reusing code from node-paperboy for static serving instead of rolling more or less our own
-
 
 
