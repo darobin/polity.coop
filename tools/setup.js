@@ -9,6 +9,9 @@ var depends = [
     "git://github.com/kriskowal/narwhal-lib.git",
     "git://github.com/kriskowal/narwhal-node.git",
 ];
+var makes = {
+    "narwhal-node": true,
+};
 var verbose = false; // XXX need a CLI
 // ---/CONFIG
 
@@ -23,8 +26,6 @@ if (base.indexOf(name) < 0) {
 base = base.replace(new RegExp(name + ".*$"), "");
 var packs = base + "commonjs/";
 
-
-sys.puts("packs=" + packs);
 // create packages
 try         { var stat = fs.statSync(packs); }
 catch (e)   { 
@@ -49,8 +50,10 @@ for (var i = 0, n = depends.length; i < n; i++) {
     var dep = depends[i];
     var dir = (/([^\/]*)\.git$/.exec(dep))[1];
     var cwd = process.cwd();
+    var pull = false;
     try {
         var stat = fs.statSync(packs + dir);
+        pull = true;
         process.chdir(packs + dir);
         exec("git pull", makeCommandOutput("git pull " + dir + " OK"));
     }
@@ -58,5 +61,17 @@ for (var i = 0, n = depends.length; i < n; i++) {
         process.chdir(packs);
         exec("git clone " + dep, makeCommandOutput("git clone " + dep + " OK"));
     }
+    if (makes[dir]) {
+        if (!pull) process.chdir(dir);
+        exec("make", makeCommandOutput("make in " + dir + " OK"));
+    }
     process.chdir(cwd);
 }
+
+// these need make to run
+for (var i = 0, n = makes.length; i < n; i++) {
+    var make = makes[i];
+    
+}
+
+
