@@ -17,6 +17,7 @@ try {
             AppRoute("", false, require("home").app),
             AppRoute("/", false, require("home").app),
             AppRoute(/^\/users\//, true, require("users").app),
+            // XXX note that there needs to be a country there, we need to handle this differently
             AppRoute(/^\/groups\//, true, require("groups").app),
             AppRoute(/^\/docs\//, true, require("docs").app),
             AppRoute(/^\/archives\//, true, require("archives").app),
