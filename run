@@ -1,7 +1,4 @@
 #!/bin/sh
-# where downloaded modules are stored
-export NODULES_PATH=./depends
-# where to get the CommonJS emulation layer (based on Narwhal) XXX abandoned approach
-# export NODE_PATH=./commonjs/narwhal-node/lib:./commonjs/narwhal-lib/lib:$NODE_PATH
-node ./lib/nodules.js
+source node_paths
+node ./lib/petrichor-run.js
 # node  --debug ./lib/nodules.js

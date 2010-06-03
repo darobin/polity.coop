@@ -16,12 +16,14 @@ exports.app = function (request) {
     //     try { return fs.readFileSync(file); }
     //     catch (e) { throw new TT.Exception("file", Template.escapeString(file) + ": really not found"); }
     // }
-    var tt = new TT({INCLUDE_PATH: ["./lib/templates"]});
-    var res = tt.process(fs.readFileSync("./lib/templates/index.tt"), { test: "foo" });
+    
+    // XXX use petrichor view helper instead
+    // var tt = new TT({INCLUDE_PATH: ["./lib/templates"]});
+    // var res = tt.process(fs.readFileSync("./lib/templates/index.tt"), { test: "foo" });
     
     return {
         status:     200,
         headers:    { "Content-Type": "text/html" },
-        body: [ res ],
+        body: [ "Hello World!" ],
     };
 };

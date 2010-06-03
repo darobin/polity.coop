@@ -11,6 +11,8 @@ TECH:
 		✓ remove commonjs
 		✓ patch Template.js for Node, pull req
 		- remove nodules, it does source filtering and breaks!
+		- revive tools/update-dependencies, and have it also write a node_paths file that run can source
+		  with the right paths. Build from packages.json, which can then be dispatched.
 		- do the layout as explained in ROUTING below
 		- then get a user system running with MongoDB and facets from Perstore
 
