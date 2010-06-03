@@ -1,4 +1,90 @@
 
+TECH:
+	- using Narwhal is useless, it is horribly slow as only Java can get
+	- the narwhal common-js emulating layer on top of Node is useless too — buggy as hell
+	- I think the solution is as follows: stick to Node, which works nicely overall, and make 
+	  Template.js work with it
+	- add processFile (or whatever best matches TT) to Template.js in order to load from files
+	
+	SO:
+		✓ obsolete setup.js in README, and flag it as dead.
+		✓ remove commonjs
+		✓ patch Template.js for Node, pull req
+		- remove nodules, it does source filtering and breaks!
+		- do the layout as explained in ROUTING below
+		- then get a user system running with MongoDB and facets from Perstore
+
+ROUTING:
+	- routing needs to be nested. That is to say, controllers are nested inside controllers, and
+	  a big part of the job of a root controller is to dispatch to subcontrollers. Say for instance
+	  that you have a URL like this the following one
+		
+		/users/darobin/docs/some-notes
+	
+	  We will have a root.js controller looking like as follows
+	
+		Cascade([
+          	Static({ ... }), // configure static handling for the site's global design
+          	AppRoute("/", false, require("home").app), // route to root
+          	AppRoute(/^\/users\//, true, require("users").app), // route to users, remove "/users"
+		  	...
+  		])
+	
+	  Then in users.js, we will have
+	
+		Cascade([
+        	Static({ ... }), // configure static handling for the app's specific content (e.g. icons)
+        	AppRoute("/", false, Users.listAll), // sub-app that lists everything
+        	AppRoute(/^\/search\//, true, Users.search), // sub-app for search
+			// type of param, params for the param parser, remove flag, app (the request is enhanced with a params field)
+			ParamRoute("path-step", { name: "user" }, true, Users.oneUser), // sub-app for single users
+		  	...
+		])
+		
+	  Users.oneUser is
+	 	oneUser: function (request) {
+			var user = request.params.user;
+			if (!user || !someDB.exists(user)) return { status: 404 };
+			return Cascade([
+	        	AppRoute("/", false, User.showProfile), // sub-app that shows the user, editable to herself
+	        	AppRoute(/^\/docs\//, true, User.docs), // sub-app for docs
+			  	...
+			]);
+		},
+
+	  User.docs is
+	 	docs: function (request) {
+			return Cascade([
+	        	AppRoute("/", false, User.listAllDocs), // all the docs
+				ParamRoute("path-step", { name: "name" }, true, User.showDoc), // sub-app for single docs
+			  	...
+			]);
+		},
+		
+	  User.showDoc is
+	 	showDoc: function (request) {
+			var name = request.params.name;
+			if (!name || !docsDB.exists(name)) return { status: 404 };
+			return renderingOfTheDoc;
+		},
+	
+	- as part of this, the idea would be to have each app packaged on its own, with "app".js, templates,
+	  and static subparts. This can work but we have to manipulate the require path correctly
+	
+	- we also need to have multiple TT WRAP layers. So the root dispatcher might list (*not* "decide")
+	  the WRAP that it wants, and push it on the WARP list. The next layer can do the same. The final
+	  app that is called simply runs its own template, without knowing anything about the higher-up
+	  warps and it gets wrapped automatically. A layer can choose to ignore the WRAP (e.g. with a noWrap
+	  option) if it knows what it's doing, and replace it with its own.
+	
+	- lib/ is where the core wiring goes, it is not for sub-apps (index.js just loads apps/root/roots.js)
+	  to start with. All the others go below apps, and are in charge of loading their own dependencies.
+	  to facilitate Static/TT loading from inside the app, a helper will be available for local resolution
+	
+	- petrichor should contain all the functionality that is needed here. It needs to mirror Cascade, and
+	  expose the view stuff as needed (exposing render("file.tt", params), wrap("file.tt"), killWrap())
+
+
 THOUGHTS:
 	- look into reusing code from node-paperboy for static serving instead of rolling more or less our own
 

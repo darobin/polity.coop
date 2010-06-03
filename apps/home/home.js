@@ -12,10 +12,10 @@ exports.app = function (request) {
     //      - add processFileSync(file, vars) which is the simple version below and
     //        processFile(file, vars) which will know whether to use callback or
     //        promises depending on arguments and availability
-    TT.Context.prototype.load_file = function load_file (file) { 
-        try { return fs.readFileSync(file); }
-        catch (e) { throw new TT.Exception("file", Template.escapeString(file) + ": really not found"); }
-    }
+    // TT.Context.prototype.load_file = function load_file (file) { 
+    //     try { return fs.readFileSync(file); }
+    //     catch (e) { throw new TT.Exception("file", Template.escapeString(file) + ": really not found"); }
+    // }
     var tt = new TT({INCLUDE_PATH: ["./lib/templates"]});
     var res = tt.process(fs.readFileSync("./lib/templates/index.tt"), { test: "foo" });
     
